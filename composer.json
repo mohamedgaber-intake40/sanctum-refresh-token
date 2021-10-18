@@ -20,7 +20,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MohamedGaber\\SanctumRefreshToken\\SanctumRefreshTokenProvider"
+                "MohamedGaber\\SanctumRefreshToken\\SanctumRefreshTokenServiceProvider"
             ]
         }
     }

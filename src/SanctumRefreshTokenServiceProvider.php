@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use MohamedGaber\SanctumRefreshToken\Models\PersonalAccessToken;
 
-class SanctumRefreshTokenProvider extends ServiceProvider
+class SanctumRefreshTokenServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -19,7 +19,7 @@ class SanctumRefreshTokenProvider extends ServiceProvider
     {
 
         if (!app()->configurationIsCached()) {
-            $this->mergeConfigFrom(__DIR__ . '/config/sanctum-refresh-token.php', 'sanctum-refresh-token');
+            $this->mergeConfigFrom(__DIR__ . '/../config/sanctum-refresh-token.php', 'sanctum-refresh-token');
         }
     }
 
@@ -30,7 +30,15 @@ class SanctumRefreshTokenProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'sanctum-refresh-token-migrations');
+
+        $this->publishes([
+            __DIR__.'/../config/sanctum-refresh-token.php' => config_path('sanctum-refresh-token.php'),
+        ], 'sanctum-refresh-token-config');
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         Sanctum::ignoreMigrations();
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
         Sanctum::authenticateAccessTokensUsing(function ($token, $isValid) {
