@@ -1,0 +1,27 @@
+{
+    "name": "mohamedgaber-intake40/sanctum-refresh-token",
+    "description": "add refresh token feature to laravel sanctum official package",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MohamedGaber\\SanctumRefreshToken\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohamed Gaber",
+            "email": "mohamed.gaberiti40@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/sanctum": "^2.11"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MohamedGaber\\SanctumRefreshToken\\SanctumRefreshTokenProvider"
+            ]
+        }
+    }
+}
