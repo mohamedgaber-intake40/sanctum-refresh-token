@@ -54,7 +54,7 @@ $user->createAuthToken('web');
 //you can add expired minutes as a parameter
 $user->createAuthToken('web',20);
 
-//you can add abilities as a parameter like to official package
+//you can add abilities as a parameter like the official package
 $user->createAuthToken('web',20,['test:update']);
 
 ```
