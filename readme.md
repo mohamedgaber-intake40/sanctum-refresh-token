@@ -75,7 +75,8 @@ _____________
 
 # Notes
 
-- if you do not add expired minutes when creating auth token or refresh token , it will consider expired minutes from sanctum-refresh-token.php config file 
+- if you do not add expired minutes when creating auth token or refresh token , it will consider expired minutes from sanctum-refresh-token.php config file
+- make sure to set expiration to null in sanctum official package config file
 
 
 
