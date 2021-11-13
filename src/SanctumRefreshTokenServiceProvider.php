@@ -47,8 +47,18 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
 
             return $isValid &&
                    Route::currentRouteName() == config('sanctum-refresh-token.refresh_route_name') ?
-                $token->can('refresh') && $token->cant('auth') :
-                $isValid && $token->can('auth') && $token->cant('refresh');
+                $this->isRefreshTokenValid($token) :
+                $this->isAuthTokenValid($token);
         });
+    }
+
+    private function isAuthTokenValid($token)
+    {
+        return $token->can('auth') && $token->cant('refresh');
+    }
+
+    private function isRefreshTokenValid($token)
+    {
+        return $token->can('refresh') && $token->cant('auth');
     }
 }
