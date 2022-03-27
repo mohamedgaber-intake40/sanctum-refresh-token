@@ -45,12 +45,17 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
             if ($token->expired_at)
                 $isValid = $isValid && $token->expired_at->gte(now());
 
-            return $isValid &&
-                   Route::currentRouteName() == config('sanctum-refresh-token.refresh_route_name') ?
-                $this->isRefreshTokenValid($token) :
-                $this->isAuthTokenValid($token);
+            return $isValid && $this->isTokenAbilityValid($token);
         });
     }
+    
+    private function isTokenAbilityValid($token)
+    {
+        return Route::currentRouteName() == config('sanctum-refresh-token.refresh_route_name') ?
+            $this->isRefreshTokenValid($token) :
+            $this->isAuthTokenValid($token);
+    }
+
 
     private function isAuthTokenValid($token)
     {
