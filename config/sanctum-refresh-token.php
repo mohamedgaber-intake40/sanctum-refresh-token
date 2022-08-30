@@ -8,7 +8,7 @@ return [
     | This value controls the used refresh route name
     |
     */
-      'refresh_route_name'      => 'token.refresh',
+      'refresh_route_name'      => 'api.token.refresh',
 
     /*
     |--------------------------------------------------------------------------
