@@ -2,7 +2,6 @@
 
 namespace MohamedGaber\SanctumRefreshToken;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -46,7 +45,12 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
 
     private function isTokenAbilityValid($token)
     {
-        return Arr::has(config('sanctum-refresh-token.refresh_route_names'), Route::currentRouteName()) ?
+        $routeNames = config('sanctum-refresh-token.refresh_route_names');
+        if (is_string($routeNames)) {
+            $routeNames = [$routeNames];
+        }
+        
+        return collect($routeNames)->contains(Route::currentRouteName()) ?
             $this->isRefreshTokenValid($token) :
             $this->isAuthTokenValid($token);
     }
