@@ -2,13 +2,13 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Refresh Route Name
+    | Refresh Route Names
     |--------------------------------------------------------------------------
     |
-    | This value controls the used refresh route name
+    | This value controls the used refresh route names
     |
     */
-      'refresh_route_name'      => 'api.token.refresh',
+    'refresh_route_names' => 'api.token.refresh',
 
     /*
     |--------------------------------------------------------------------------
@@ -19,6 +19,6 @@ return [
     | considered expired.
     |
     */
-     'auth_token_expiration'    => 60,
-     'refresh_token_expiration' => 180,
+    'auth_token_expiration'    => 60,
+    'refresh_token_expiration' => 180,
 ];
