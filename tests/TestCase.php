@@ -21,8 +21,6 @@ abstract class TestCase extends BaseTestCase
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->foreignId('country_id')->nullable()->constrained();
-            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
