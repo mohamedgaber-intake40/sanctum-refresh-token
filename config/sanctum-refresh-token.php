@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -19,6 +22,6 @@ return [
     | considered expired.
     |
     */
-    'auth_token_expiration'    => 60,
+    'auth_token_expiration' => 60,
     'refresh_token_expiration' => 180,
 ];

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\PersonalAccessToken;
 
-return new class extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +16,10 @@ return new class extends Migration
      */
     public function up()
     {
-        PersonalAccessToken::query()->chunk(1000,function ($tokensChunk){
-           $tokensChunk->each(function ($token){
-               $token->update(['expires_at' => $token->expired_at]);
-           });
+        PersonalAccessToken::query()->chunk(1000, function ($tokensChunk) {
+            $tokensChunk->each(function ($token) {
+                $token->update(['expires_at' => $token->expired_at]);
+            });
         });
         Schema::table('personal_access_tokens', function (Blueprint $table) {
             $table->dropColumn('expired_at');
@@ -34,8 +36,8 @@ return new class extends Migration
         Schema::table('personal_access_tokens', function (Blueprint $table) {
             $table->timestamp('expired_at')->nullable()->after('last_used_at');
         });
-        PersonalAccessToken::query()->chunk(1000,function ($tokensChunk){
-            $tokensChunk->each(function ($token){
+        PersonalAccessToken::query()->chunk(1000, function ($tokensChunk) {
+            $tokensChunk->each(function ($token) {
                 $token->update(['expired_at' => $token->expires_at]);
             });
         });
