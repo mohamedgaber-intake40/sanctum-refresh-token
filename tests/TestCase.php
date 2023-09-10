@@ -26,11 +26,6 @@ abstract class TestCase extends BaseTestCase
             $table->boolean('active')->default(false);
             $table->timestamps();
         });
-        /**
-         * @var $router Router
-         * */
-        $router = $this->app->get('router');
-        $router->post('api/refresh-token', fn () => true)->name('api.refresh-token');
     }
 
     protected function getPackageProviders($app)
