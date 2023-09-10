@@ -19,14 +19,13 @@ use Tests\Datasets\User;
 uses(
     Tests\TestCase::class,
     RefreshDatabase::class
-)->beforeEach(function (){
+)->beforeEach(function () {
     Route::post('api/refresh-token', fn () => response(['message' => 'success']))->name('api.token.refresh')->middleware('auth:sanctum');
     Route::post('api/other-route', fn () => response(['message' => 'success']))->name('api.other-route')->middleware('auth:sanctum');
     Route::post('api/refresh-token1', fn () => response(['message' => 'success']))->name('api.token.refresh1')->middleware('auth:sanctum');
     Route::post('api/refresh-token2', fn () => response(['message' => 'success']))->name('api.token.refresh2')->middleware('auth:sanctum');
-    $this->user =  User::factory()->create();
+    $this->user = User::factory()->create();
 })->in('Feature');
-
 
 /*
 |--------------------------------------------------------------------------

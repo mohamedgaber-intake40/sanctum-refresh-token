@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Tests\Datasets\User;
-
 it('refresh token can be generated with expires time from config', function () {
     $this->freezeTime();
     $refreshToken = $this->user->createRefreshToken('refresh');

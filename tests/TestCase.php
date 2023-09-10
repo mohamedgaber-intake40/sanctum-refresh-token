@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\SanctumServiceProvider;
 use MohamedGaber\SanctumRefreshToken\SanctumRefreshTokenServiceProvider;

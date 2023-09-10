@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Tests\Datasets\User;
-
 it('auth token can be generated with expires time from config', function () {
     $this->freezeTime();
     $authToken = $this->user->createAuthToken('auth');
