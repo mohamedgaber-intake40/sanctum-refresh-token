@@ -8,6 +8,11 @@
             "MohamedGaber\\SanctumRefreshToken\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Mohamed Gaber",
@@ -17,11 +22,37 @@
     "require": {
         "laravel/sanctum": "^3.0"
     },
+    "require-dev": {
+        "pestphp/pest": "^2.15",
+        "laravel/pint": "^1.11",
+        "phpstan/phpstan": "^1.10",
+        "nunomaduro/larastan": "^2.0",
+        "orchestra/testbench": "^8.9",
+        "pestphp/pest-plugin-faker": "^2.0"
+    },
+    "scripts": {
+        "lint": "pint",
+        "test:lint": "pint --test",
+        "test:unit": "./vendor/bin/pest --order-by random",
+        "test:static": "phpstan analyse",
+        "test": [
+            "@test:lint",
+            "@test:unit",
+            "@test:static"
+        ]
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "MohamedGaber\\SanctumRefreshToken\\SanctumRefreshTokenServiceProvider"
             ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }
