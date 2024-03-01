@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MohamedGaber\SanctumRefreshToken;
 
+use Arr;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -45,14 +47,8 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
 
     private function isTokenAbilityValid(PersonalAccessToken $token): bool
     {
-        /** @var array<string>|string $routeNames */
-        $routeNames = config('sanctum-refresh-token.refresh_route_names');
-        if (is_string($routeNames)) {
-            $routeNames = [$routeNames];
-        }
-
         // @phpstan-ignore-next-line
-        return collect($routeNames)->contains(Route::currentRouteName()) ?
+        return collect(Arr::wrap(config('sanctum-refresh-token.refresh_route_names')))->contains(Route::currentRouteName()) ?
             $this->isRefreshTokenValid($token) :
             $this->isAuthTokenValid($token);
     }
@@ -64,6 +60,21 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
 
     private function isRefreshTokenValid(PersonalAccessToken $token): bool
     {
-        return $token->can('refresh') && $token->cant('auth');
+        if (! $token->can('refresh') || $token->can('auth')) {
+            return false;
+        }
+        // @phpstan-ignore-next-line
+        if (collect($token->abilities)->contains(fn (string $ability) => preg_match('/^access-token-id:[0-9]+$/', $ability))) {
+            /** @var string $accessToken */
+            $accessToken = Request::header('x-access-token');
+            if (! $accessToken || ! $accessToken = PersonalAccessToken::findToken($accessToken)) {
+                return false;
+            }
+
+            // @phpstan-ignore-next-line
+            return $token->can('access-token-id:' . $accessToken->id);
+        }
+
+        return true;
     }
 }

@@ -83,3 +83,28 @@ it('refresh token never expire can be generated  ', function () {
     $this->assertDatabaseCount('personal_access_tokens', 1);
     expect($authToken->accessToken['expires_at'])->toBe(null);
 });
+
+it('refresh token can be related to single auth token only', function () {
+    $authToken = $this->user->createAuthToken('auth');
+    $refreshToken = $this->user->createRefreshToken('refresh', null, $authToken);
+    expect(count($refreshToken->accessToken->abilities))->toBe(2)
+        ->and($refreshToken->accessToken->can('access-token-id:' . $authToken->accessToken->id))->toBeTrue();
+});
+it('x-access-token header is required for refresh token related to single auth token to access refresh route', function () {
+    $authToken = $this->user->createAuthToken('auth');
+    $refreshToken = $this->user->createRefreshToken('refresh', null, $authToken);
+    $this->withToken($refreshToken->plainTextToken);
+    $response = $this->postJson(route('api.token.refresh'));
+    $response->assertStatus(401);
+});
+it(
+    'x-access-token header is required and has a valid value for related auth token for refresh token related to single auth token to access refresh route',
+    function () {
+        $authToken = $this->user->createAuthToken('auth');
+        $refreshToken = $this->user->createRefreshToken('refresh', null, $authToken);
+        $this->withToken($refreshToken->plainTextToken);
+        $this->withHeader('x-access-token', $authToken->plainTextToken);
+        $response = $this->postJson(route('api.token.refresh'));
+        $response->assertStatus(200);
+    }
+);
