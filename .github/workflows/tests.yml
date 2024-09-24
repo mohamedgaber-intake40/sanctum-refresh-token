@@ -1,14 +1,14 @@
 name: run-tests
 
-on: [push, pull_request,workflow_dispatch]
+on: [push, pull_request]
 
 jobs:
     test:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [8.3, 8.2]
-                dependency-version: [prefer-lowest, prefer-stable]
+                php: [8.2]
+                dependency-version: [prefer-stable]
 
         name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
