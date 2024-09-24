@@ -19,7 +19,7 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
     public function register()
     {
 
-        if (! app()->configurationIsCached()) { // @phpstan-ignore-line
+        if (! app()->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__ . '/../config/sanctum-refresh-token.php', 'sanctum-refresh-token');
         }
     }
@@ -39,8 +39,8 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
             __DIR__ . '/../config/sanctum-refresh-token.php' => config_path('sanctum-refresh-token.php'),
         ], 'sanctum-refresh-token-config');
 
-        if ($this->app->runningUnitTests()){
-            $this->loadMigrationsFrom(__DIR__ .'/../vendor/laravel/sanctum/database/migrations');
+        if ($this->app->runningUnitTests()) {
+            $this->loadMigrationsFrom(__DIR__ . '/../vendor/laravel/sanctum/database/migrations');
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
         Sanctum::authenticateAccessTokensUsing(fn ($token, $isValid) => $isValid && $this->isTokenAbilityValid($token));
