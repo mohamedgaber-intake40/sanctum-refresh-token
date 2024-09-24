@@ -39,7 +39,10 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
             __DIR__ . '/../config/sanctum-refresh-token.php' => config_path('sanctum-refresh-token.php'),
         ], 'sanctum-refresh-token-config');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        if ($this->app->runningUnitTests()){
+            $this->loadMigrationsFrom(__DIR__ .'/../vendor/laravel/sanctum/database/migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        }
         Sanctum::authenticateAccessTokensUsing(fn ($token, $isValid) => $isValid && $this->isTokenAbilityValid($token));
     }
 
