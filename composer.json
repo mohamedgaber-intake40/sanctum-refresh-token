@@ -20,15 +20,15 @@
         }
     ],
     "require": {
-        "laravel/sanctum": "^3.0"
+        "laravel/sanctum": "^4.0"
     },
     "require-dev": {
         "pestphp/pest": "^2.15",
         "laravel/pint": "^1.11",
         "phpstan/phpstan": "^1.10",
-        "nunomaduro/larastan": "^2.0",
-        "orchestra/testbench": "^8.9",
-        "pestphp/pest-plugin-faker": "^2.0"
+        "orchestra/testbench": "^9.1.0",
+        "pestphp/pest-plugin-faker": "^2.0",
+        "larastan/larastan": "^2.9"
     },
     "scripts": {
         "lint": "pint",
