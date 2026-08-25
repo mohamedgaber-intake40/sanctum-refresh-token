@@ -62,11 +62,24 @@ class SanctumRefreshTokenServiceProvider extends ServiceProvider
 
     private function isAuthTokenValid(PersonalAccessToken $token): bool
     {
-        return $token->can('auth') && $token->cant('refresh');
+        return ! $this->marksARefreshToken($token);
     }
 
     private function isRefreshTokenValid(PersonalAccessToken $token): bool
     {
-        return $token->can('refresh') && $token->cant('auth');
+        return $this->marksARefreshToken($token);
+    }
+
+    /**
+     * Read the abilities array directly rather than going through can().
+     *
+     * can() treats '*' as granting every ability, which is correct for
+     * authorisation and wrong here: a standard Sanctum token holds ['*'], so
+     * can('auth') and can('refresh') were both true and the token was rejected
+     * as neither.
+     */
+    private function marksARefreshToken(PersonalAccessToken $token): bool
+    {
+        return in_array('refresh', $token->abilities ?? [], true);
     }
 }
